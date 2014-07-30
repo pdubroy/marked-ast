@@ -1,0 +1,30 @@
+{
+  "name": "marked-ast",
+  "version": "0.1.0",
+  "description": "Parses Markdown into an abstract syntax tree. Based on github.com/chjj/marked.",
+  "author": "Patrick Dubroy <pdubroy@gmail.com> (http://dubroy.com)",
+  "license": "MIT",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^5.9.1",
+    "jshint": "^2.5.2",
+    "tape": "^2.13.4",
+    "watchify": "^1.0.1"
+  },
+  "scripts": {
+    "build": "browserify -s marked-ast -o dist/marked-ast-bundle.js main.js",
+    "watch": "watchify -s marked-ast -o dist/marked-ast-bundle.js main.js",
+    "test": "tape test/*.js",
+    "prepublish": "npm run build && npm run test && npm run lint",
+    "lint": "jshint *.js lib/*.js test/*.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "marked",
+    "markdown",
+    "ast"
+  ]
+}
