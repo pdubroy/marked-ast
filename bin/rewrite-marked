@@ -15,7 +15,7 @@ var PlusEqualsVisitor = recast.Visitor.extend({
 
     this.genericVisit(node);
     if (node.operator == '+=')
-      return visitPlusEquals(node);
+      visitPlusEquals(node);
     visitAssignment(node, 'right');
   },
   visitVariableDeclarator: function(node) {
@@ -42,17 +42,18 @@ function visitAssignment(node, rightChildKeyName) {
 
 // Visitor for AssignmentExpression nodes where the operator is '+='.
 // It replaces the node with a subtree of the form:
-//     <old_lhs>.concat(<old_rhs>);
+//     <old_lhs> = <old_lhs>.concat(<old_rhs>);
 function visitPlusEquals(node) {
-  return b.callExpression(
+  node.operator = '=';
+  node.right = b.callExpression(
     b.memberExpression(node.left, b.identifier('concat'), false),
     [node.right]
-  );  
+  );
 }
 
 // Do the work -- read in the marked source code, rewrite it, and write the
 // result to stdout.
-var code = fs.readFileSync(require.resolve('marked'));
+var code = fs.readFileSync(require.resolve(__dirname + '/../third_party/marked'));
 var ast = recast.parse(code);
 new PlusEqualsVisitor().visit(ast);
 console.log(recast.print(ast).code);
