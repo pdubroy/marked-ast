@@ -1,15 +1,12 @@
 var test = require('tape');
 
 var marked = require('marked'),
-    markedMod = require('../gen/marked-mod.js');
+    markedMod = require('../');
 
-var stringRenderer = new marked.Renderer;
-stringRenderer.newSequence = function() {
-  return '';
-};
+require('./chjj-marked/test/').runTests();
 
 test('rewrite to string', function (t) {
   var text = '_This is **Markdown**_, he said.';
-  t.equal(markedMod(text, { renderer: stringRenderer }), marked(text));
+  t.equal(markedMod(text), marked(text));
   t.end();
 });

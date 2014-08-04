@@ -4,7 +4,6 @@
   "description": "Parses Markdown into an abstract syntax tree. Based on github.com/chjj/marked.",
   "author": "Patrick Dubroy <pdubroy@gmail.com> (http://dubroy.com)",
   "license": "MIT",
-  "main": "main.js",
   "dependencies": {
   },
   "devDependencies": {
@@ -16,6 +15,7 @@
   },
   "scripts": {
     "rewrite": "bin/rewrite-marked > gen/marked-mod.js",
+    "update-tests": "git submodule init && git submodule update && cp -r third_party/marked/test test/chjj-marked/test",
     "build": "browserify -s marked-ast -o dist/marked-ast-bundle.js main.js",
     "watch": "watchify -s marked-ast -o dist/marked-ast-bundle.js main.js",
     "test": "tape test/*.js",
