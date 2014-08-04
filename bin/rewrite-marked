@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    recast = require('recast');
+
+var b = recast.types.builders;
+var n = recast.types.namedTypes;
+
+// Rewrites the AST to eliminate explicit string concatenation.
+var PlusEqualsVisitor = recast.Visitor.extend({
+  visitAssignmentExpression: function(node) {
+    // Skip the code inside `InlineLexer.prototype.mangle`.
+    if (node.left && node.left.property && node.left.property.name == 'mangle')
+      return;
+
+    this.genericVisit(node);
+    if (node.operator == '+=')
+      return visitPlusEquals(node);
+    visitAssignment(node, 'right');
+  },
+  visitVariableDeclarator: function(node) {
+    this.genericVisit(node);
+    visitAssignment(node, 'init');
+  }
+});
+
+// Creates a new AST node which is the result of parsing `src`.
+function createNode(src) {
+  return recast.parse(src).program.body[0];
+}
+
+var newSequenceNode = createNode('this.renderer.newSequence()');
+
+// Visits an AssignmentExpression or VariableDeclarator, and if the right
+// hand side is an empty string literal, replaces it with a call to
+// `this.renderer.newSequence`.
+function visitAssignment(node, rightChildKeyName) {
+  var rightChild = node[rightChildKeyName];
+  if (n.Literal.check(rightChild) && rightChild.value === '')
+    node[rightChildKeyName] = newSequenceNode;
+}
+
+// Visitor for AssignmentExpression nodes where the operator is '+='.
+// It replaces the node with a subtree of the form:
+//     <old_lhs>.concat(<old_rhs>);
+function visitPlusEquals(node) {
+  return b.callExpression(
+    b.memberExpression(node.left, b.identifier('concat'), false),
+    [node.right]
+  );  
+}
+
+// Do the work -- read in the marked source code, rewrite it, and write the
+// result to stdout.
+var code = fs.readFileSync(require.resolve('marked'));
+var ast = recast.parse(code);
+new PlusEqualsVisitor().visit(ast);
+console.log(recast.print(ast).code);
