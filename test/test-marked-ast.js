@@ -1,6 +1,5 @@
 var fork = require('child_process').fork,
-    test = require('tape'),
-    util = require('util');
+    test = require('tape');
 
 var marked = require('marked'),
     markedMod = require('../');
@@ -18,9 +17,9 @@ function runProcess(relativePath, cb) {
 
 test('chjj-marked tests', function(t) {
   // Compare the results of the original marked tests with the modified tests.
-  runProcess('../third_party/marked/test/', function(code, expectedOut, err) {
+  runProcess('../third_party/marked/test/', function(code, expectedOut /*, err */) {
     t.equal(code, 0);
-    runProcess('/chjj-marked/test/', function(code, out, err) {
+    runProcess('/chjj-marked/test/', function(code, out /*, err */) {
       t.equal(code, 0);
       t.equal(out, expectedOut);
       t.end();
@@ -30,6 +29,9 @@ test('chjj-marked tests', function(t) {
 
 test('rewrite to string', function (t) {
   var text = '_This is **Markdown**_, he said.';
-  t.equal(markedMod(text), marked(text));
+
+  var ast = markedMod.parse(text);
+  t.equal(markedMod.render(ast), marked(text));
+
   t.end();
 });
