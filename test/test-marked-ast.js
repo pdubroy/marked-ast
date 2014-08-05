@@ -1,7 +1,7 @@
 var fork = require('child_process').fork,
     test = require('tape');
 
-var marked = require('marked'),
+var marked = require('../third_party/marked'),
     markedMod = require('../');
 
 function runProcess(relativePath, cb) {
