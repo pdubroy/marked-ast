@@ -23,9 +23,7 @@ The package is just a wrapper for `marked`, so the produced HTML should be ident
           "This is ",
           {
             "type": "strong",
-            "text": [
-              "Markdown"
-            ]
+            "text": [ "Markdown" ]
           }
         ]
       },
@@ -34,3 +32,17 @@ The package is just a wrapper for `marked`, so the produced HTML should be ident
   }
 ]
 ```
+
+## Development
+
+Basic setup:
+
+```
+git clone https://github.com/pdubroy/marked-ast.git
+cd marked-ast
+npm install && git submodule update --init
+```
+
+### Running Tests
+
+Use `npm test` to run the tests. Before checking code in, run `npm run prepublish`.

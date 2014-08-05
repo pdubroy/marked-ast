@@ -15,7 +15,7 @@ function runProcess(relativePath, cb) {
   });
 }
 
-test('chjj-marked tests', function(t) {
+test('original marked test suite', function(t) {
   // Compare the results of the original marked tests with the modified tests.
   runProcess('../third_party/marked/test/', function(code, expectedOut /*, err */) {
     t.equal(code, 0);
