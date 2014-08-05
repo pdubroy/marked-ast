@@ -15,7 +15,7 @@ var PlusEqualsVisitor = recast.Visitor.extend({
 
     this.genericVisit(node);
     if (node.operator == '+=')
-      visitPlusEquals(node);
+      return visitPlusEquals(node);
     visitAssignment(node, 'right');
   },
   visitVariableDeclarator: function(node) {
@@ -24,12 +24,12 @@ var PlusEqualsVisitor = recast.Visitor.extend({
   }
 });
 
-// Creates a new AST node which is the result of parsing `src`.
-function createNode(src) {
-  return recast.parse(src).program.body[0];
+// Creates a new AST Expression node which is the result of parsing `src`.
+function createExpression(src) {
+  return recast.parse(src).program.body[0].expression;
 }
 
-var newSequenceNode = createNode('this.renderer.newSequence()');
+var newSequenceNode = createExpression('this.renderer.newSequence()');
 
 // Visits an AssignmentExpression or VariableDeclarator, and if the right
 // hand side is an empty string literal, replaces it with a call to
