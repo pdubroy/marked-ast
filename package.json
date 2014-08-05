@@ -17,8 +17,8 @@
   "scripts": {
     "rewrite": "bin/rewrite-marked > gen/marked-mod.js",
     "update-tests": "git submodule init && git submodule update && cp -r third_party/marked/test test/chjj-marked/test",
-    "build": "browserify -s marked-ast -o dist/marked-ast-bundle.js main.js",
-    "watch": "watchify -s marked-ast -o dist/marked-ast-bundle.js main.js",
+    "build": "browserify -s marked -o dist/marked-ast-bundle.js index.js",
+    "watch": "watchify -s marked -o dist/marked-ast-bundle.js index.js",
     "test": "tape test/*.js",
     "prepublish": "npm run build && npm run test && npm run lint",
     "lint": "jshint *.js test/*.js"
