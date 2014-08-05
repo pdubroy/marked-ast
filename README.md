@@ -37,10 +37,11 @@ The package is just a wrapper for `marked`, so the produced HTML should be ident
 
 Basic setup:
 
-```
+```bash
 git clone https://github.com/pdubroy/marked-ast.git
 cd marked-ast
-npm install && git submodule update --init
+npm install
+git submodule update --init
 ```
 
 ### Running Tests
