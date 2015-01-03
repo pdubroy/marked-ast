@@ -5,7 +5,10 @@
   "author": "Patrick Dubroy <pdubroy@gmail.com> (http://dubroy.com)",
   "license": "MIT",
   "dependencies": {
-    "underscore": "^1.6.0"
+    "amp-each": "^1.0.1",
+    "amp-is-array": "^1.0.1",
+    "amp-is-object": "^1.0.1",
+    "amp-map": "^1.0.1"
   },
   "devDependencies": {
     "browserify": "^5.9.1",
