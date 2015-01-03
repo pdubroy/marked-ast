@@ -1,4 +1,3 @@
-var _ = require('underscore');
 var marked = require('./gen/marked-mod');
 
 // Alias marked's default renderer as HtmlRenderer.
@@ -40,6 +39,23 @@ var handlerArgs = {
   image: ['href', 'title', 'text']
 };
 
+function isObject(obj) {
+  var type = typeof obj;
+  return type === 'function' || type === 'object' && !!obj;
+}
+
+function isArray(obj) {
+  return Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+function map(arr, fn) {
+  var result = [];
+  for (var i = 0; i < arr.length; ++i) {
+    result.push(fn(arr[i], i));
+  }
+  return result;
+}
+
 // Returns a handler function which just returns an object which captures the
 // values of all the arguments to the handler function.
 function makeHandler(type, args) {
@@ -63,23 +79,24 @@ function parse(text) {
 }
 
 function render(node, renderer) {
-  if (!_.isObject(node))
+  if (!isObject(node))
     return node;
 
   // Render all of the children.
-  var results = _.isArray(node) ? [] : {};
-  _.each(node, function(value, key) {
-    results[key] = render(value, renderer);
-  });
+  var results = isArray(node) ? [] : {};
+  for (var key in node) {
+    if (node.hasOwnProperty(key))
+      results[key] = render(node[key], renderer);
+  }
 
-  if (_.isArray(node))
+  if (isArray(node))
     return results.join('');
 
   // Splat the results object onto the appropriate handler in the renderer.
   var handlerFn = renderer[node.type];
   if (!handlerFn) throw new Error("Missing handler for '" + node.type + "'");
 
-  var args = _.map(handlerArgs[node.type], function(argName) {
+  var args = map(handlerArgs[node.type], function(argName) {
     return results[argName];
   });
   return handlerFn.apply(renderer, args);
