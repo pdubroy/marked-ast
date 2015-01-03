@@ -1,4 +1,7 @@
-var _ = require('underscore');
+var isObject = require('amp-is-object');
+var isArray = require('amp-is-array');
+var each = require('amp-each');
+var map = require('amp-map');
 var marked = require('./gen/marked-mod');
 
 // Alias marked's default renderer as HtmlRenderer.
@@ -63,23 +66,23 @@ function parse(text) {
 }
 
 function render(node, renderer) {
-  if (!_.isObject(node))
+  if (!isObject(node))
     return node;
 
   // Render all of the children.
-  var results = _.isArray(node) ? [] : {};
-  _.each(node, function(value, key) {
+  var results = isArray(node) ? [] : {};
+  each(node, function(value, key) {
     results[key] = render(value, renderer);
   });
 
-  if (_.isArray(node))
+  if (isArray(node))
     return results.join('');
 
   // Splat the results object onto the appropriate handler in the renderer.
   var handlerFn = renderer[node.type];
   if (!handlerFn) throw new Error("Missing handler for '" + node.type + "'");
 
-  var args = _.map(handlerArgs[node.type], function(argName) {
+  var args = map(handlerArgs[node.type], function(argName) {
     return results[argName];
   });
   return handlerFn.apply(renderer, args);
