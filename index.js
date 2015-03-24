@@ -1,3 +1,5 @@
+'use strict';
+
 var marked = require('./gen/marked-mod');
 
 // Alias marked's default renderer as HtmlRenderer.

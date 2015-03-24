@@ -19,7 +19,7 @@
     "watch": "watchify -s marked -o dist/marked-ast-bundle.js index.js",
     "test": "tape test/*.js",
     "prepublish": "npm run build && npm run test && npm run lint",
-    "lint": "jshint *.js test/*.js"
+    "lint": "eslint *.js test/*.js"
   },
   "directories": {
     "test": "test"

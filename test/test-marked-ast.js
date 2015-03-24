@@ -1,3 +1,7 @@
+'use strict';
+
+/* global __dirname */
+
 var fork = require('child_process').fork,
     test = require('tape');
 
