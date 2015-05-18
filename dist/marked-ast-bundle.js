@@ -190,7 +190,8 @@ Lexer.prototype.token = function(src, top, bq) {
       this.tokens.push({
         type: 'code',
         lang: cap[2],
-        text: cap[3]
+        text: cap[3],
+        fenced: true
       });
       continue;
     }
@@ -756,7 +757,7 @@ function Renderer(options) {
   this.options = options || {};
 }
 
-Renderer.prototype.code = function(code, lang, escaped) {
+Renderer.prototype.code = function(code, lang, escaped, fenced) {
   if (this.options.highlight) {
     var out = this.options.highlight(code, lang);
     if (out != null && out !== code) {
@@ -980,7 +981,8 @@ Parser.prototype.tok = function() {
     case 'code': {
       return this.renderer.code(this.token.text,
         this.token.lang,
-        this.token.escaped);
+        this.token.escaped,
+        !!this.token.fenced);
     }
     case 'table': {
       var header = this.renderer.newSequence()
@@ -1299,7 +1301,7 @@ AstBuilder.prototype.newSequence = function() {
 };
 
 var handlerArgs = {
-  code: ['code', 'lang', 'escaped'],
+  code: ['code', 'lang', 'escaped', 'fenced'],
   blockquote: ['quote'],
   html: ['html'],
   heading: ['text', 'level', 'raw'],
