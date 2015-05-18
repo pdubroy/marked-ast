@@ -1,6 +1,6 @@
 {
   "name": "marked-ast",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Parses Markdown into an abstract syntax tree. Based on github.com/chjj/marked.",
   "author": "Patrick Dubroy <pdubroy@gmail.com> (http://dubroy.com)",
   "license": "MIT",
