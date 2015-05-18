@@ -47,3 +47,14 @@ git submodule update --init
 ### Running Tests
 
 Use `npm test` to run the tests. Before checking code in, run `npm run prepublish`.
+
+### Updating Marked
+
+To update to a new version of marked:
+
+```bash
+cd third_party/marked
+git checkout <REF>  # E.g., `git checkout v0.3.3`
+cd ../..
+npm run rewrite && npm test
+```

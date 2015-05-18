@@ -870,7 +870,7 @@ Renderer.prototype.link = function(href, title, text) {
     } catch (e) {
       return '';
     }
-    if (prot.indexOf('javascript:') === 0) {
+    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0) {
       return '';
     }
   }
@@ -1276,6 +1276,8 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
+'use strict';
+
 var marked = require('./gen/marked-mod');
 
 // Alias marked's default renderer as HtmlRenderer.
