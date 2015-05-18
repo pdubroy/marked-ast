@@ -1387,8 +1387,8 @@ function render(node, renderer) {
 module.exports = {
   _marked: marked,
   parse: parse,
-  render: function(tree) {
-    return render(tree, new HtmlRenderer());
+  render: function(tree, renderer) {
+    return render(tree, renderer || new HtmlRenderer());
   },
   AstBuilder: AstBuilder
 };
