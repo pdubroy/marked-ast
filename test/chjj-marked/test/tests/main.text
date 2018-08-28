@@ -8,6 +8,9 @@ also completely [inconsistent][test] with regards to paragraphs in list items.
 
 A link. Not anymore.
 
+#NotAHeading: This won't count as a heading because a space between the
+hash and the heading markup is required.
+
 <aside>This will make me fail the test because
 markdown.js doesnt acknowledge arbitrary html blocks =/</aside>
 
