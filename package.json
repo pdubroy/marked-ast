@@ -7,7 +7,7 @@
   "dependencies": {},
   "devDependencies": {
     "browserify": "^5.9.1",
-    "eslint": "^0.17.1",
+    "eslint": "^6.6.0",
     "recast": "^0.6.10",
     "tape": "^2.13.4",
     "watchify": "^1.0.1"
